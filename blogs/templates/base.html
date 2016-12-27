@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>goinghugh</title>
+    <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/Blogs.css' %}" media="screen" title="no title" charset="utf-8">
+
+  </head>
+  <body>
+    {% block header %}
+      <div class="ui inverted top fixed menu borderless black menu">
+        <div class="header item">
+          <a href="#">
+            <img src="{% static 'images/g.png'%}" alt="" />
+          </a>
+          <a href="#" class="item">BLOG</a>
+          <a href="#" class="item">写一篇</a>
+          <a href="#" class="right"></a>
+        </div>
+        <div class="right menu">
+          <div class="item">
+            <a href="#"class="ui White inverted header">
+              <div class="ui mini circular image">
+                <img src="{%static 'images/g.png'%}" alt="" />
+              </div>
+            </a>
+            <a href="#">logout</a>
+          </div>
+        </div>
+      </div>
+
+    {% endblock header %}
+    {% block content %}
+      <div class="ui ui vertical basic container segment">
+        <h2 class="ui">
+            {% for blog in blogs %}
+                <h5>
+                    {{ blog.title }}
+                </h5>
+                <h5>
+                    {{ blog.blog_content }}
+                </h5>
+                <h5>
+                    {{ blog.createtime }}
+                </h5>
+            {% endfor %}
+        </h2>
+      </div>
+    {% endblock %}
+  </body>
+</html>

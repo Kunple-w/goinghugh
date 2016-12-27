@@ -4,4 +4,4 @@ from blogs.models import Blogs
 def index(request):
     # blog = Blogs.objects
     # return render(request,"base.html")
-    return render(request,"blog.html")
+    return render(request,"base.html")

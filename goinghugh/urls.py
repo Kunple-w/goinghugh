@@ -17,11 +17,17 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from blogs.views import index
+from blogs.views import index,blog,new_blog_form,new_blog_post,index_login,index_register
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index),
+    url(r'^$', index,name='index'),
+    url(r'^blog/(?P<page>\d+)/$', blog,name='blog'),
+    url(r'^new_blog/$', new_blog_form,name='new_blog_form'),
+    url(r'^post_blog/$', new_blog_post,name='new_blog_post'),
+    url(r'^login/$', index_login,name='login'),
+    url(r'^register/$', index_register,name='register'),
+
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form class="ui tiny form" action="{% url "new_blog_post" %}" method="post">
+    {% csrf_token %}
+        {% for f in form %}
+            {{ f.label }}
+            {{ f }}
+        {% endfor  %}
+        {% autoescape on %}
+        <div style="height: 80px">
+            <div id="id_blog_content">
+
+            </div>
+        </div>
+        {% endautoescape %}
+
+    <button type="submit" class="ui blue button">提交</button>
+    </form>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        var editor = new wangEditor('id_blog_content');
+        editor.create();
+    </script>
+{% endblock %}

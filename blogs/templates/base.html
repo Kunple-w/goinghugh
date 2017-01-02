@@ -7,17 +7,19 @@
     <title>goinghugh</title>
     <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/Blogs.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'wangEditor/dist/css/wangEditor.min.css' %}" media="screen" title="no title" charset="utf-8">
 
   </head>
   <body>
+
     {% block header %}
       <div class="ui inverted top fixed menu borderless black menu">
         <div class="header item">
-          <a href="#">
+          <a href="{% url 'index' %}">
             <img src="{% static 'images/g.png'%}" alt="" />
           </a>
           <a href="#" class="item">BLOG</a>
-          <a href="#" class="item">写一篇</a>
+          <a href="{% url 'new_blog_form' %}" class="item">写一篇</a>
           <a href="#" class="right"></a>
         </div>
         <div class="right menu">
@@ -33,22 +35,35 @@
       </div>
 
     {% endblock header %}
-    {% block content %}
-      <div class="ui ui vertical basic container segment">
-        <h2 class="ui">
-            {% for blog in blogs %}
-                <h5>
-                    {{ blog.title }}
-                </h5>
-                <h5>
-                    {{ blog.blog_content }}
-                </h5>
-                <h5>
-                    {{ blog.createtime }}
-                </h5>
-            {% endfor %}
-        </h2>
+
+      <div class="ui vertical basic container segment">
+
+
+
+            {% block content %}
+                {% for blog in blogs %}
+                    <a style="font-size: 20px" href="{% url "blog" blog.id %}">
+                            {{ blog.title }}
+                    </a>
+                    <span style="font-size: 10px">
+                        <i class="calendar icon"></i>
+                        {{ blog.createtime }}
+                    </span>
+                    {% autoescape off %}
+                    <h6>
+                        {{ blog.blog_content|truncatewords_html:8 }}
+                    </h6>
+                    {% endautoescape %}
+                    <div class="ui divider"></div>
+                {% endfor %}
+             {% endblock %}
+
       </div>
-    {% endblock %}
   </body>
+<script type="text/javascript" src="{% static "wangEditor/dist/js/lib/jquery-1.10.2.min.js" %}"></script>
+<script type="text/javascript" src="{% static "wangEditor/dist/js/wangEditor.min.js" %}"></script>
+{% block js %}
+
+{% endblock %}
+
 </html>

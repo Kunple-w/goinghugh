@@ -1,8 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from blogs.models import Blogs
 from django.core.exceptions import ObjectDoesNotExist
 from blogs.forms import NewBlogForm
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
 # Create your views here.
 
 def index(request):
@@ -36,3 +37,18 @@ def new_blog_post(request):
             c = Blogs(title=title,blog_content=blog_content)
             c.save()
             return redirect(to='index')
+
+def index_login(request):
+    if request.method == "GET":
+        form = AuthenticationForm
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            login(request,form.get_user())
+            return redirect('index')
+    context = {
+        'form':form
+    }
+    return render(request,'login.html',context)
+def index_register(request):
+    return HttpResponse('regisger')

@@ -7,20 +7,19 @@
             {{ f.label }}
             {{ f }}
         {% endfor  %}
-        {% autoescape on %}
         <div style="height: 80px">
             <div id="id_blog_content">
-
             </div>
         </div>
-        {% endautoescape %}
-
     <button type="submit" class="ui blue button">提交</button>
     </form>
 {% endblock %}
+
 {% block js %}
     <script type="text/javascript">
         var editor = new wangEditor('id_blog_content');
         editor.create();
+        var editor_digest = new wangEditor("id_blog_degist");
+        editor_digest.create();
     </script>
 {% endblock %}

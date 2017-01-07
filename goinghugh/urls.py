@@ -17,15 +17,18 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from blogs.views import index,blog,new_blog_form,new_blog_post,index_login,index_register
+from django.contrib.auth.views import logout
+from blogs.views import index,blog,new_blog_form,new_blog_post,index_login,index_register,article_to_blog
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index,name='index'),
     url(r'^blog/(?P<page>\d+)/$', blog,name='blog'),
+    url(r'^comment/(?P<id>\d+)/$', article_to_blog,name='comment'),
     url(r'^new_blog/$', new_blog_form,name='new_blog_form'),
     url(r'^post_blog/$', new_blog_post,name='new_blog_post'),
     url(r'^login/$', index_login,name='login'),
+    url(r'^logout/$', logout,{'next_page':'/'},name='logout'),
     url(r'^register/$', index_register,name='register'),
 
 ]

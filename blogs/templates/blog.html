@@ -1,14 +1,54 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block content %}
-    <h1 class="ui header">
-        {{ blog_detail.title }}
-    </h1>
-    {% autoescape off %}
-    <h6 class="ui header">
-        {{ blog_detail.blog_content }}
-    </h6>
-    {% endautoescape %}
-    <h6 class="ui header">
-        {{ blog_detail.createtime }}
-    </h6>
+    <div class="ui container segment">
+        <h1 class="ui header">
+            {{ blog_detail.title }}
+        </h1>
+         <span style="font-size: 10px">
+            <i class="calendar icon"></i>
+            {{ blog_detail.createtime|date:"Y年m月d日" }}
+            {{ blog_detail.createtime|time:"H:i" }}
+        </span>
+        {% autoescape off %}
+        <h6 class="ui header">
+            {{ blog_detail.blog_digest }}
+            {{ blog_detail.blog_content }}
+        </h6>
+        {% endautoescape %}
+    </div>
+{% endblock %}
+{% block article %}
+    <div class="ui vertical basic container segment" >
+        <div class="ui segment">
+
+                {% for article in articles %}
+                    <div class="ui comments">
+                        <div class="content">
+                            <a href="#" class="author">{{ article.articler }}</a>
+                            <div class="metadata">
+                                <div class="date">
+                                    {{ article.article_createtime }}
+                                </div>
+                            </div>
+                            <p class="text">
+                                {{ article.article_content }}
+                            </p>
+                            <div class="ui divider"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+        <form class="ui error tiny form" action="{% url 'comment' blog_detail.id %}" method="post">
+            {% csrf_token %}
+            {% for field in article_form %}
+                <div class="ui field">
+                {{ field.label }}
+                {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="ui blue button">Click</button>
+        </form>
+        </div>
+
+    </div>
 {% endblock %}

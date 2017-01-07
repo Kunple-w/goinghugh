@@ -55,8 +55,7 @@ ROOT_URLCONF = 'goinghugh.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR,'templates').replace('\\','/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,3 +127,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'upload').replace("\\",'/')
+LOGIN_URL = '/login/'

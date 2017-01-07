@@ -13,23 +13,32 @@
   <body>
 
     {% block header %}
-      <div class="ui inverted top fixed menu borderless black menu">
+      <div class="ui inverted  top menu borderless black menu">
         <div class="header item">
           <a href="{% url 'index' %}">
             <img src="{% static 'images/g.png'%}" alt="" />
           </a>
-          <a href="#" class="item">BLOG</a>
-          <a href="{% url 'new_blog_form' %}" class="item">写一篇</a>
+
+            {% if request.user.is_authenticated %}
+              <a href="{% url 'new_blog_form' %}" class="item">写一篇</a>
+            {% endif %}
           <a href="#" class="right"></a>
         </div>
         <div class="right menu">
-          <div class="item">
-            <a href="#"class="ui White inverted header">
-              <div class="ui mini circular image">
-                <img src="{%static 'images/g.png'%}" alt="" />
-              </div>
-            </a>
-            <a href="{% url 'login' %}">logout</a>
+            <div class="item">
+                <a href="{% url 'index' %}" class="right item">BLOG</a>
+            </div>
+            <div class="item">
+                <a href="#" class="right item">ABOUT ME</a>
+            </div>
+            <div class="item"></div>
+            <div class="item">
+              {% if  request.user.is_authenticated %}
+                <a class="ui inverted circular button" href="{% url 'logout' %}">LOGOUT</a>
+              {% else %}
+                <a class="ui inverted circular button" href="{% url 'login' %}">LOGIN</a>
+              {% endif %}
+
           </div>
         </div>
       </div>
@@ -37,28 +46,69 @@
     {% endblock header %}
 
       <div class="ui vertical basic container segment">
+      {% block content %}
+        <div class="ui grid">
+            <div class="row">
+                <div class="twelve wide column">
+                        {% for blog in blogs %}
+                            <div class="ui container segment">
+                                <a style="font-size: 20px;padding-bottom: 5px;" href="{% url "blog" blog.id %}">
+                                    {{ blog.title }}
+                                </a>
+                                <br>
+                                <span style="font-size: 10px">
+                                    <i class="calendar icon"></i>
+                                    {{ blog.createtime }}
+                                </span>
+                                {% autoescape off %}
+                                    <h6>
+                                        {{ blog.blog_digest }}
+                                    </h6>
+                                {% endautoescape %}
+                            </div>
+                        {% endfor %}
+                </div>
+                <div class="three wide column">
+                    <div class="ui vertical borderless menu ">
+                            <div class="item">
+                                标签
+                            </div>
+                            <div class="ui divider"></div>
+                            <div class="item">
+                                <a href="#">
+                                    <p>
+                                        <span class="ui right floated">
+                                            python
+                                        </span>
+                                        <span style="float: right" class="ui right floated">
+                                            2
+                                        </span>
+                                    </p>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="#">django</a>
+                            </div>
+                            <div class="item">
+                                <a href="#">django</a>
+                            </div>
+                            <div class="item">
+                                <a href="#">django</a>
+                            </div>
+                            <div class="item">
+                                <a href="#">django</a>
+                            </div>
+                        </div>
+                </div>
 
-
-
-            {% block content %}
-                {% for blog in blogs %}
-                    <a style="font-size: 20px" href="{% url "blog" blog.id %}">
-                            {{ blog.title }}
-                    </a>
-                    <span style="font-size: 10px">
-                        <i class="calendar icon"></i>
-                        {{ blog.createtime }}
-                    </span>
-                    {% autoescape off %}
-                    <h6>
-                        {{ blog.blog_content|truncatewords_html:8 }}
-                    </h6>
-                    {% endautoescape %}
-                    <div class="ui divider"></div>
-                {% endfor %}
-             {% endblock %}
+            </div>
+        </div>
+      {% endblock %}
 
       </div>
+    {% block article %}
+
+    {% endblock %}
   </body>
 <script type="text/javascript" src="{% static "wangEditor/dist/js/lib/jquery-1.10.2.min.js" %}"></script>
 <script type="text/javascript" src="{% static "wangEditor/dist/js/wangEditor.min.js" %}"></script>

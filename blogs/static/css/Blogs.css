@@ -2,7 +2,7 @@
 .ui.inverted.top.fixed.menu.borderless.black.menu{
     margin-bottom: 50px;
 }
-.ui.vertical.basic.container.segment{
-    margin-top: 100px;
+.ui.vertical.basic.segment{
+    margin-top: 20px;
     width: 800px;
 }

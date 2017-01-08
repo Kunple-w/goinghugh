@@ -20,15 +20,16 @@
 {% endblock %}
 {% block article %}
     <div class="ui vertical basic container segment" >
+       <h3 class="ui horizontal  divider header" style="">Comments</h3>
         <div class="ui segment">
-
                 {% for article in articles %}
                     <div class="ui comments">
                         <div class="content">
                             <a href="#" class="author">{{ article.articler }}</a>
                             <div class="metadata">
                                 <div class="date">
-                                    {{ article.article_createtime }}
+                                    {{ article.article_createtime|date:"Y年m月d日" }}
+                                    {{ article.article_createtime|time:"H:i" }}
                                 </div>
                             </div>
                             <p class="text">
@@ -48,7 +49,18 @@
             {% endfor %}
             <button type="submit" class="ui blue button">Click</button>
         </form>
-        </div>
 
+{#        <!--PC版-->#}
+{#            <div id="SOHUCS" sid="blog_detail.id"></div>#}
+{#            <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>#}
+{#            <script type="text/javascript">#}
+{#                window.changyan.api.config({#}
+{#                appid: 'cysMRnkCe',#}
+{#                conf: 'prod_84a103b3a13fb90244efa25297e74906'#}
+{#                });#}
+{#            </script>#}
+
+        </div>
     </div>
+
 {% endblock %}

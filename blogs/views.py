@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
-    blog = Blogs.objects.all()
+    blog = Blogs.objects.all().order_by("-createtime")
     context = {
         'blogs':blog
     }
@@ -17,7 +17,7 @@ def blog(request,page):
     articleForm = ArticleForm
     try:
         blog_detail = Blogs.objects.get(id = page)
-        articles = blog_detail.article_to_blog.all()
+        articles = blog_detail.article_to_blog.all().order_by("-article_createtime")
     except ObjectDoesNotExist:
         return render(request,'404.html')
     context = {
